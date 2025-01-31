@@ -81,7 +81,7 @@ export const logout = (req,res) => {
     try{
         res.cookie("jwt", "", {
             maxAge:0
-        })
+        });
         return res.status(200).json({message:"User Logged Out"})
     } catch(error){
         console.log("User login failed", error)
@@ -104,5 +104,14 @@ export const updateProfilePic = async (req,res) => {
     } catch(error){
         console.log("Error uploading profile pic", error)
         return res.status(500).json({message:"Internal Server Error"});
+    }
+};
+
+export const checkAuth = (req, res) => {
+    try{
+        return res.status(200).json(req.user);
+    } catch(error){
+        console.log("Error in checkAuth controller", error);
+        return res.json(500).json({message:"Internal Server Error"});
     }
 };
