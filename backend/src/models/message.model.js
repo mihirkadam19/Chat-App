@@ -15,14 +15,14 @@ const messageSchema = new mongoose.Schema({
         type: String,
     },
     image: {
-        types: String,
+        type: String,
     }
 },
     {timestamps: true}
 );
 
 // "Message" will create a collection in MongoDB as "messages" if it doesn't already exists using the "messageSchema"
-const Messsage = mongoose.model("Message", messageSchema);
+const Message = mongoose.model("Message", messageSchema);
 
 //exporting the Message model so it can be used in other components
-export default Messsage;
+export default Message;
