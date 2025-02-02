@@ -11,7 +11,10 @@ import { useAuthStore } from '../store/useAuthStore';
 
 
 const SignUpPage = () => {
+  // Use this to toggle Password or ••••••
   const [showPassword, setShowPassword] = useState(false);
+
+  // Use this to update the form data state
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -31,8 +34,9 @@ const SignUpPage = () => {
     return true;
   };
 
-  // prevent refresh
+  
   const handleSubmit = (e) => {
+    // prevent user input refresh if errors
     e.preventDefault();
     const success = validateForm();
 
