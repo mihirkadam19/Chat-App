@@ -1,13 +1,20 @@
+//UI
 import React, { useEffect } from 'react';
 import {Loader} from "lucide-react";
 import {Routes, Route, Navigate} from 'react-router-dom';
+import {Toaster} from "react-hot-toast";
 
+//components
 import Navbar from './components/Navbar';
+
+//pages
 import HomePage from './pages/HomePage.jsx';
 import SignUpPage from './pages/SignUpPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import SettingsPage from './pages/SettingsPage.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
+
+//store
 import { useAuthStore } from './store/useAuthStore.js';
 
 const App = () => {
@@ -34,6 +41,11 @@ const App = () => {
         <Route path='/settings' element={<SettingsPage/>} />
         <Route path='/profile' element={ authUser ? <ProfilePage/> : <Navigate to="/login"/> } />
       </Routes>
+
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
     </div>
   )
 }
