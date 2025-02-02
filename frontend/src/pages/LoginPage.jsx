@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useAuthStore } from '../store/useAuthStore';
-import { Eye, EyeOff, Link, Loader2, Lock, Mail, MessageSquare } from 'lucide-react';
+import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare } from 'lucide-react';
 import AuthImagePattern from '../components/AuthImagePattern';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
 
