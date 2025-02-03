@@ -18,11 +18,11 @@ import ProfilePage from './pages/ProfilePage.jsx';
 import { useAuthStore } from './store/useAuthStore.js';
 
 const App = () => {
-  const {authUser, checkAuth, isCheckingAuth} = useAuthStore();
+  const {authUser, checkAuth, isCheckingAuth, isUpdatingProfile} = useAuthStore();
 
   useEffect(() => {
     checkAuth();
-  }, [checkAuth]);
+  }, [checkAuth,isUpdatingProfile]);
 
   //console.log({authUser});
   
