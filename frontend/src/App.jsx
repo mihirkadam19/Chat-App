@@ -16,9 +16,11 @@ import ProfilePage from './pages/ProfilePage.jsx';
 
 //store
 import { useAuthStore } from './store/useAuthStore.js';
+import { useThemeStore } from './store/useThemeStore.js';
 
 const App = () => {
   const {authUser, checkAuth, isCheckingAuth, isUpdatingProfile} = useAuthStore();
+  const {setTheme, theme } = useThemeStore();
 
   useEffect(() => {
     checkAuth();
@@ -32,7 +34,7 @@ const App = () => {
     </div>
   );
   return (
-    <div>
+    <div data-theme={theme}>
       <Navbar/>
       <Routes>
         <Route path='/' element={authUser ? <HomePage/>: <Navigate to="/login"/>} />
