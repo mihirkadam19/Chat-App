@@ -9,7 +9,7 @@ router.post("/signup", signup)
 router.post("/login", login)
 router.post("/logout", logout)
 
-router.put("/updateProfilePic", protectRoute, updateProfilePic)
+router.put("/update-pfp", protectRoute, updateProfilePic)
 
 router.get("/check", protectRoute, checkAuth)
 
