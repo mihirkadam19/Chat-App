@@ -24,7 +24,7 @@ const App = () => {
 
   useEffect(() => {
     checkAuth();
-  }, [checkAuth,isUpdatingProfile]);
+  }, [checkAuth,isUpdatingProfile, theme]);
 
   //console.log({authUser});
   
