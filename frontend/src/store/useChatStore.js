@@ -2,7 +2,7 @@ import { create } from "zustand";
 import toast from "react-hot-toast";
 import { axiosInstance } from "../lib/axios";
 
-export const useChatStore = create( (set) => ({
+export const useChatStore = create( (set,get) => ({
     messages:[],
     users:[],
     selectedUser: null,
@@ -31,6 +31,32 @@ export const useChatStore = create( (set) => ({
         } finally {
             set({isMessagesLoading:false});
         }
+    },
+
+    sendMessage: async(msgData) => {
+        const {selectedUser, messages} = get()
+        try {
+            const res = await axiosInstance.post(`/message/send/${selectedUser._id}`, msgData);
+            set({messages:[...messages, res.data]})
+        } catch(error){
+            if (error.response) { // Check if the server responded with an error
+                const errorMessage = error.response.data?.message || error.response.statusText || "An error occurred."; // Use optional chaining
+    
+                if (error.response.status === 413) {
+                    console.error("Payload Too Large:", errorMessage);
+                    toast.error("Message too large. Please shorten it."); // Specific message for 413
+                } else {
+                    console.error("HTTP Error:", error.response.status, errorMessage);
+                    toast.error(errorMessage); // Generic message for other errors
+                }
+            } else if (error.request) { // The request was made but no response was received
+                console.error("No response received:", error.message);
+                toast.error("No response from the server.");
+            } else { // Something happened in setting up the request that triggered an Error
+                console.error("Request setup error:", error.message);
+                toast.error("An error occurred while setting up the request.");
+            }
+        } 
     },
 
     //todo: optimize later
