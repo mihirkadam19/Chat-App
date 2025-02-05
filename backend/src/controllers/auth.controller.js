@@ -65,7 +65,7 @@ export const login = async (req,res) => {
         // generate a JWT token
         generateToken(user._id, res)
         return res.status(200).json({
-            id:user._id,
+            _id:user._id,
             fullName:user.fullName,
             email:user.email,
             profilePic:user.profilePic
