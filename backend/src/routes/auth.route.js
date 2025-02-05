@@ -1,5 +1,5 @@
 import express from "express";
-import { signup, login, logout, updateProfilePic, checkAuth } from "../controllers/auth.controller.js";
+import { signup, login, logout, updateProfilePic, checkAuth, updateLanguage } from "../controllers/auth.controller.js";
 import { protectRoute } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
@@ -10,6 +10,7 @@ router.post("/login", login)
 router.post("/logout", logout)
 
 router.put("/update-pfp", protectRoute, updateProfilePic)
+router.put("/update-lang", protectRoute, updateLanguage)
 
 router.get("/check", protectRoute, checkAuth)
 

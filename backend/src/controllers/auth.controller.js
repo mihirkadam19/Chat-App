@@ -37,7 +37,8 @@ export const signup = async (req,res) => {
                 _id:newUser._id,
                 fullName:newUser.fullName,
                 email:newUser.fullName,
-                profilePic:newUser.profilePic
+                profilePic:newUser.profilePic,
+                language: newUser.language
             })
         } else {
             return res.status(400).json({message:"Invalid User Data"});
@@ -115,4 +116,18 @@ export const checkAuth = (req, res) => {
         console.log("Error in checkAuth controller", error);
         return res.json(500).json({message:"Internal Server Error"});
     }
+
 };
+
+export const updateLanguage = async (req, res) => {
+    try {
+        const {language} = req.body;
+        const userId = req.user._id;
+        const updatedUser = await User.findByIdAndUpdate(userId, {language: language}, {new:true});
+        return res.status(200).json(updatedUser);
+
+    } catch(error){
+        console.log("Error updating the language", error);
+        return res.status(500).json({message:"Internal Server Error"});
+    }
+}

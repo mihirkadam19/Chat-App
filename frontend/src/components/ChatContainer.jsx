@@ -62,7 +62,10 @@ const ChatContainer = () => {
                     )}
                     {message.text && <p>{message.text}</p>}
                     </div>
-                    <div className="chat-footer"> Translate to English </div>
+                    {authUser?.language && 
+                        <div className="chat-footer"> Translate to {authUser.language}</div>
+                    }
+                    
                 </div>
                 ))}
             </div>
