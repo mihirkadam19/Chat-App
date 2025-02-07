@@ -8,7 +8,7 @@ import { formatMessageTime } from '../lib/utils.js';
 
 
 const ChatContainer = () => {
-    const {selectedUser, messages, getMessages, isMessageLoading } = useChatStore();
+    const {selectedUser, messages, getMessages, isMessageLoading, translation, translate, backToOriginal } = useChatStore();
     const {authUser} = useAuthStore();
     
     
@@ -63,7 +63,9 @@ const ChatContainer = () => {
                     {message.text && <p>{message.text}</p>}
                     </div>
                     {authUser?.language && 
-                        <div className="chat-footer"> Translate to {authUser.language}</div>
+                        <div className="chat-footer" onClick={translation ? backToOriginal : translate}> 
+                            { translation ? "back to original" : `Translate to ${authUser.language}` }
+                        </div>
                     }
                     
                 </div>

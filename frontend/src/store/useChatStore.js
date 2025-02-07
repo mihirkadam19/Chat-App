@@ -8,6 +8,7 @@ export const useChatStore = create( (set,get) => ({
     selectedUser: null,
     isUsersLoading: false,
     isMessagesLoading: false,
+    translation: false,
     
     getUsers: async() => {
         set({isUsersLoading:true})
@@ -63,4 +64,18 @@ export const useChatStore = create( (set,get) => ({
 
     //todo: optimize later
     setSelectedUser: (selectedUser) => set({ selectedUser }),
+
+    translate: async(data) => {
+        try{
+            set({translation:true});
+        } catch(error){
+            set({translation:false});
+            toast.error("Error translating text");
+            console.log("Error in translation",error);
+        }
+    },
+
+    backToOriginal: async() => {
+        set({translation:false});
+    },
 }));
