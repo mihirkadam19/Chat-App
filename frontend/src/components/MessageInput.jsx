@@ -19,7 +19,7 @@ const MessageInput = () => {
     }
 
     const reader = new FileReader();
-    reader.onload = () => {
+    reader.onloadend = () => {
       setImagePreview(reader.result);
     }
     reader.readAsDataURL(file); 

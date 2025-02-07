@@ -30,6 +30,8 @@ export const useChatStore = create( (set,get) => ({
             toast.error(error.res.data.message);
         } finally {
             set({isMessagesLoading:false});
+            const {messages} = get()
+            console.log(messages)
         }
     },
 
@@ -37,7 +39,7 @@ export const useChatStore = create( (set,get) => ({
         const {selectedUser, messages} = get()
         try {
             const res = await axiosInstance.post(`/message/send/${selectedUser._id}`, msgData);
-            set({messages:[...messages, res.data]})
+            set({messages:[...messages, res.data]});
         } catch(error){
             if (error.response) { // Check if the server responded with an error
                 const errorMessage = error.response.data?.message || error.response.statusText || "An error occurred."; // Use optional chaining
