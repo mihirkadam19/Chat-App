@@ -12,7 +12,9 @@ const ChatContainer = () => {
     const {authUser} = useAuthStore();
     
     
-    
+    useEffect(() => {
+        getMessages(selectedUser._id)
+    }, [getMessages, selectedUser._id]);
 
     
 
