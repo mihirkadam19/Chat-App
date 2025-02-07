@@ -19,7 +19,10 @@ export const useAuthStore = create((set, get) => ({
         try{
             const response = await axiosInstance.get("/auth/check");
             set({authUser: response.data});
+            //console.log(response.data)
+            
             get().connectSocket(); 
+            //console.log(get().socket)
         } catch(error){
             set({authUser: null})
             console.log("Error in check auth", error)
@@ -86,12 +89,24 @@ export const useAuthStore = create((set, get) => ({
     },
 
     connectSocket: () => {
-        const {authUser} = get();
-        if (!authUser || get().socket?.connected) return;
+        const {authUser, socket, onlineUsers} = get();
+        //console.log(socket)
+        if (!authUser || socket?.connected) return;
         
-        const connectoinSocket = io(BASE_URL);
-        connectoinSocket.connect();
-        set({socket: connectoinSocket});
+        const newSocket = io(BASE_URL, {
+            query:{
+                userId: authUser._id,
+            },
+        });
+        newSocket.connect();
+        set({socket: newSocket});
+
+        //listen for online users
+        newSocket.on("getOnlineUsers", (userIds) => {
+            //console.log(userIds);
+            set({onlineUsers: userIds});
+            //console.log("onlineUsers",get().onlineUsers);
+        })
     },
 
     disconnectSocket: () => {
