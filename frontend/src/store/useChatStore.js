@@ -9,7 +9,7 @@ export const useChatStore = create( (set,get) => ({
     selectedUser: null,
     isUsersLoading: false,
     isMessagesLoading: false,
-    translation: false,
+
 
 
     getUsers: async () => {
@@ -34,7 +34,7 @@ export const useChatStore = create( (set,get) => ({
         } finally {
             set({isMessagesLoading:false});
             const {messages} = get()
-            console.log(messages)
+            //console.log(messages)
         }
     },
 
@@ -85,17 +85,4 @@ export const useChatStore = create( (set,get) => ({
         socket.off("newMessage");
     },
 
-    translate: async(data) => {
-        try{
-            set({translation:true});
-        } catch(error){
-            set({translation:false});
-            toast.error("Error translating text");
-            console.log("Error in translation",error);
-        }
-    },
-
-    backToOriginal: async() => {
-        set({translation:false});
-    },
 }));

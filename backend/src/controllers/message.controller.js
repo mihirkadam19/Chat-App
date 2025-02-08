@@ -73,3 +73,13 @@ export const sendMessages = async (req, res) => {
     }
     
 };
+
+export const translateMessage = async(req, res) => {
+    try {
+        const {text, body} = req.body;
+        
+    } catch(error){
+        console.log("Error in Translation controller", error);
+        return res.status(500).json({message:"Internal Server Error"})
+    }
+};

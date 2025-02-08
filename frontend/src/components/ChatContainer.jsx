@@ -1,14 +1,15 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useChatStore } from '../store/useChatStore.js';
 import ChatHeader from './ChatHeader.jsx';
 import MessageInput from './MessageInput.jsx';
 import { useAuthStore } from '../store/useAuthStore.js';
 import MessageSkeleton from './skeletons/MessageSkeleton.jsx';
 import { formatMessageTime } from '../lib/utils.js';
+import { Table } from 'lucide-react';
 
 
 const ChatContainer = () => {
-    const {selectedUser, messages, getMessages, isMessageLoading, subscribeToMessages, unsubscribeFromMessages, translation, translate, backToOriginal } = useChatStore();
+    const {selectedUser, messages, getMessages, isMessageLoading, subscribeToMessages, unsubscribeFromMessages} = useChatStore();
     const {authUser} = useAuthStore();
     const messageEndRef = useRef(null);
     
@@ -24,6 +25,15 @@ const ChatContainer = () => {
             messageEndRef.current.scrollIntoView({behavior: "smooth"});
         }
     }, [messages])
+
+    const [translate, setTranslate] = useState(false);
+    const [translatedMsg, setTranslatedMsg] = useState(); // because the updates are async we maintain two diff states
+    
+    const handleTranslation = (message) => {
+        //console.log(message._id, translate);
+        setTranslate(!translate)
+        setTranslatedMsg(message)
+    }
     
 
     if (isMessageLoading) return (
@@ -71,8 +81,8 @@ const ChatContainer = () => {
                     {message.text && <p>{message.text}</p>}
                     </div>
                     {authUser?.language && 
-                        <div className="chat-footer" onClick={translation ? backToOriginal : translate}> 
-                            { translation ? "back to original" : `Translate to ${authUser.language}` }
+                        <div className="chat-footer" onClick={() => {handleTranslation(message)}}> 
+                            { translate && translatedMsg._id ===message._id ? "back to original" : `Translate to ${authUser.language}` }
                         </div>
                     }
                     
