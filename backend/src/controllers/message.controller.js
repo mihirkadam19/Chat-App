@@ -1,7 +1,11 @@
+import { axiosGemini } from "../lib/axios.js";
 import cloudinary from "../lib/cloudinary.js";
 import { getReceiverSocketId, io } from "../lib/socket.js";
 import Message from "../models/message.model.js";
 import User from "../models/user.model.js";
+import {config} from "dotenv";
+
+config();
 
 export const getUsersForSidebar = async(req, res) => {
     try{
@@ -76,8 +80,16 @@ export const sendMessages = async (req, res) => {
 
 export const translateMessage = async(req, res) => {
     try {
-        const {text, body} = req.body;
-        
+        const {text} = req.body;
+        const language = req.user.language;
+        const data = {
+            contents: [{
+              parts: [{ text: `Return only the translated text. Translate the following to ${language}: ${text}` }]
+            }]
+          };
+        const response = await axiosGemini.post("", data)
+        const translatedText = response.data.candidates?.[0]?.content?.parts?.[0]?.text || "Translation not available";
+        return res.status(200).json(translatedText)
     } catch(error){
         console.log("Error in Translation controller", error);
         return res.status(500).json({message:"Internal Server Error"})

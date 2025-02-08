@@ -5,8 +5,8 @@ import { getMessages, getUsersForSidebar, sendMessages, translateMessage } from 
 const router = express.Router();
 
 router.get("/users", protectRoute, getUsersForSidebar);
+router.get("/translate", protectRoute, translateMessage);
 router.get("/:id", protectRoute, getMessages);
 router.post("/send/:id", protectRoute, sendMessages);
-router.get("/translate", protectRoute, translateMessage);
 
 export default router;
