@@ -1,4 +1,4 @@
-import { Camera, Mail, User } from 'lucide-react';
+import { Camera, Languages, Mail, User } from 'lucide-react';
 import React, { useState } from 'react'
 import { useAuthStore } from '../store/useAuthStore';
 
@@ -82,6 +82,23 @@ const ProfilePage = () => {
               <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{authUser?.email}</p>
             </div>
 
+          
+            <div className="space-y-1.5">
+              <div className="text-sm text-zinc-400 flex items-center gap-2">
+                <Languages className="w-4 h-4" />
+                Preferred Language
+              </div>
+              <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{authUser?.language}</p>
+              <div className="flex items-center justify-center">
+                <p 
+                  className="text-center text-sm cursor-pointer"
+                  onClick={() => {console.log("working")}}
+                  >
+                  Click here to edit
+                </p>
+              </div>
+            </div>
+
             <div className="mt-6 bg-base-300 rounded-xl p-6">
             <h2 className="text-lg font-medium  mb-4">Account Information</h2>
             <div className="space-y-3 text-sm">
@@ -92,10 +109,6 @@ const ProfilePage = () => {
               <div className="flex items-center justify-between py-2 border-b border-zinc-700">
                 <span>Account Status</span>
                 <span className="text-green-500">Active</span>
-              </div>
-              <div className="flex items-center justify-between py-2 ">
-                <span>Language </span>
-                <span className="text-green-500">{authUser?.language}</span>
               </div>
             </div>
           </div>
