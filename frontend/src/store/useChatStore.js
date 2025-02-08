@@ -63,7 +63,7 @@ export const useChatStore = create( (set,get) => ({
         } 
     },
 
-    //todo: optimize later
+    
     setSelectedUser: (selectedUser) => set({ selectedUser }),
 
     subscribeToMessages: () => {
@@ -72,6 +72,7 @@ export const useChatStore = create( (set,get) => ({
         
         const socket = useAuthStore.getState().socket;
         socket.on("newMessage", (newMessage) => {
+            if (newMessage.senderId !== selectedUser._id) return; // my socket receives messages so code displays it for all users because no filter
             set({
                 messages: [...get().messages, newMessage],
             });
