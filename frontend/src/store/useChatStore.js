@@ -91,13 +91,12 @@ export const useChatStore = create( (set,get) => ({
                 "text": text
             }
             const res = await axiosInstance.post("/message/translate", data);
-            console.log(res.data)
+            //console.log(res)
             return res.data;
         } catch(error){
-            toast.error(error.res.data.message);
+            //console.log(error.response.data.message)
+            toast.error(error.response.data.message);
             return;
         }
-        
-
     }
 }));
