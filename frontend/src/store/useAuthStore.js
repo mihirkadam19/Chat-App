@@ -88,6 +88,17 @@ export const useAuthStore = create((set, get) => ({
         }
     },
 
+    updateLanguage: async(data) => {
+        try{
+            const response = await axiosInstance.put("/auth/update-lang", data)
+            toast.success("Language preference Updated")
+            set({authUser:response.data})
+        } catch(error){
+            console.log(error);
+            toast.error(error.message);
+        }
+    },
+
     connectSocket: () => {
         const {authUser, socket, onlineUsers} = get();
         //console.log(socket)
