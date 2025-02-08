@@ -9,7 +9,7 @@ import { Table } from 'lucide-react';
 
 
 const ChatContainer = () => {
-    const {selectedUser, messages, getMessages, isMessageLoading, subscribeToMessages, unsubscribeFromMessages} = useChatStore();
+    const {selectedUser, messages, getMessages, isMessageLoading, subscribeToMessages, unsubscribeFromMessages, translateMessage} = useChatStore();
     const {authUser} = useAuthStore();
     const messageEndRef = useRef(null);
     
@@ -27,12 +27,17 @@ const ChatContainer = () => {
     }, [messages])
 
     const [translate, setTranslate] = useState(false);
-    const [translatedMsg, setTranslatedMsg] = useState(); // because the updates are async we maintain two diff states
+    const [translatedMsg, setTranslatedMsg] = useState({
+        msgId:"",
+        text:""
+    }); // because the updates are async we maintain two diff states
     
-    const handleTranslation = (message) => {
+    const handleTranslation = async (message) => {
         //console.log(message._id, translate);
+        const translatedText = await translateMessage(message.text);
+        if (!translatedText) return;
         setTranslate(!translate)
-        setTranslatedMsg(message)
+        setTranslatedMsg({msgId:message._id, text:translatedText})
     }
     
 
@@ -78,7 +83,7 @@ const ChatContainer = () => {
                         className="sm:max-w-[200px] rounded-md mb-2"
                         />
                     )}
-                    {message.text && <p>{message.text}</p>}
+                    {message.text && translate && translatedMsg.msgId===message._id? <p>{translatedMsg.text}</p> : <p>{message.text}</p>}
                     </div>
                     {authUser?.language && 
                         <div className="chat-footer" onClick={() => {handleTranslation(message)}}> 

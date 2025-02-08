@@ -85,4 +85,19 @@ export const useChatStore = create( (set,get) => ({
         socket.off("newMessage");
     },
 
+    translateMessage: async (text) => {
+        try {
+            const data = {
+                "text": text
+            }
+            const res = await axiosInstance.post("/message/translate", data);
+            console.log(res.data)
+            return res.data;
+        } catch(error){
+            toast.error(error.res.data.message);
+            return;
+        }
+        
+
+    }
 }));

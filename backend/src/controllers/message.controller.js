@@ -81,6 +81,7 @@ export const sendMessages = async (req, res) => {
 export const translateMessage = async(req, res) => {
     try {
         const {text} = req.body;
+        console.log(text);
         const language = req.user.language;
         const data = {
             contents: [{
@@ -89,6 +90,7 @@ export const translateMessage = async(req, res) => {
           };
         const response = await axiosGemini.post("", data)
         const translatedText = response.data.candidates?.[0]?.content?.parts?.[0]?.text || "Translation not available";
+        //console.log(translatedText)
         return res.status(200).json(translatedText)
     } catch(error){
         console.log("Error in Translation controller", error);
