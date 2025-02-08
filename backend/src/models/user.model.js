@@ -22,7 +22,8 @@ const userSchema = new mongoose.Schema(
         },
         language: {
             type: String,
-            default: "English",
+            default: "",
+            required: true,
         }
     }, 
     { timestamps: true}

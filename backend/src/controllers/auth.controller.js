@@ -4,9 +4,9 @@ import User from "../models/user.model.js";
 import bcrypt from "bcryptjs"
 
 export const signup = async (req,res) => {
-    const {fullName, email, password} = req.body;
+    const {fullName, email, password, language} = req.body;
     try{
-        if (!fullName || !email || !password){
+        if (!fullName || !email || !password || !language){
             return res.status(400).json({message:"All fields are required"})
         }
 
@@ -26,7 +26,8 @@ export const signup = async (req,res) => {
         const newUser = User({
             fullName,
             email,
-            password:hashedPassword
+            password:hashedPassword,
+            language
         })
 
         if (newUser) {

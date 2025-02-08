@@ -27,6 +27,7 @@ const SignUpPage = () => {
   const validateForm = () => {
     if(!formData.fullName.trim()) return toast.error("Full Name is required");
     if(!formData.email.trim()) return toast.error("Email is requried");
+    if(!formData.language.trim()) return toast.error("Language is required");
     if (!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Invalid email format");
     if (!formData.password.trim()) return toast.error("Password is required");
     if (formData.password.length < 8) return toast.error("Password must be at least 8 characters");
@@ -77,6 +78,24 @@ const SignUpPage = () => {
                   placeholder="John Doe"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                />
+              </div>
+            </div>
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-medium">Preferred Language</span>
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <User className="size-5 text-base-content/40" />
+                </div>
+                <input
+                  type="text"
+                  className={`input input-bordered w-full pl-10`}
+                  placeholder="English"
+                  value={formData.language}
+                  onChange={(e) => setFormData({ ...formData, language: e.target.value })}
                 />
               </div>
             </div>
