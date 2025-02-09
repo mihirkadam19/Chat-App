@@ -19,6 +19,7 @@ const SignUpPage = () => {
     fullName: "",
     email: "",
     password:"",
+    language:""
   });
 
   const {signup, isSigningUP} = useAuthStore();

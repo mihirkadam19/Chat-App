@@ -86,7 +86,7 @@ export const translateMessage = async(req, res) => {
         const translatedText = await geminiHelper(language, text);
         return res.status(200).json(translatedText);    
     } catch(error){
-        // console.log("Error in Translation controller", error.message);
+        console.log("Error in Translation controller", error.message);
         return res.status(500).json({message:error.message})
     }
 };
