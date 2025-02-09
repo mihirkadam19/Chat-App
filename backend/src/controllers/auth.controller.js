@@ -1,4 +1,5 @@
 import cloudinary from "../lib/cloudinary.js";
+import testQueue from "../lib/redis.js";
 import { generateToken } from "../lib/utils.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs"
@@ -34,6 +35,8 @@ export const signup = async (req,res) => {
             // generate JWT
             generateToken(newUser._id, res);
             await newUser.save();
+
+
             return res.status(201).json({
                 _id:newUser._id,
                 fullName:newUser.fullName,
@@ -66,6 +69,7 @@ export const login = async (req,res) => {
         } 
         // generate a JWT token
         generateToken(user._id, res)
+        testQueue.add({ user })
         return res.status(200).json({
             _id:user._id,
             fullName:user.fullName,
