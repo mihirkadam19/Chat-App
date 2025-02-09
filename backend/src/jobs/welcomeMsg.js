@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { CookieJar } from 'tough-cookie';
 import { wrapper } from 'axios-cookiejar-support';
-import testQueue from '../lib/redis.js';
+import postSingupQueue from '../lib/redis.js';
 
 // Backend endpoints
 const LOGIN_URL = 'http://localhost:5001/api/auth/login';
@@ -47,7 +47,7 @@ const sendMessage = async (receiverID, messageData) => {
     }
 };
 
-testQueue.process(async (job) => {
+postSingupQueue.process(async (job) => {
     console.log(`Processing job ${job.id}:`, job.data);
 
     if (!job.data.userId) {
@@ -62,7 +62,11 @@ testQueue.process(async (job) => {
         text: "Click the prompt below to translate to your preferred language"
     }
 
+    const closeChatMsg = {
+        text: "You can close this chat now and continue exploring!"
+    }
     await sendMessage(job.data.userId, greetings);
     await sendMessage(job.data.userId, translateMsg);
+    await sendMessage(job.data.userId, closeChatMsg);
     console.log(`Job ${job.id} completed`);
 });
