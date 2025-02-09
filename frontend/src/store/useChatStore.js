@@ -6,11 +6,19 @@ import {useAuthStore} from "./useAuthStore.js"
 export const useChatStore = create( (set,get) => ({
     messages:[],
     users:[],
-    selectedUser: null,
     isUsersLoading: false,
     isMessagesLoading: false,
 
+    selectedUser: null,
 
+    getWelcomeUser: async() => {
+        try{
+            const res = await axiosInstance.get("/message/wlc-user")
+            set({selectedUser:res.data});
+        } catch {
+            console.log(error.response.data.message)
+        }
+    },
 
     getUsers: async () => {
         set({ isUsersLoading: true });
@@ -91,7 +99,7 @@ export const useChatStore = create( (set,get) => ({
                 "text": text
             }
             const res = await axiosInstance.post("/message/translate", data);
-            //console.log(res)
+            console.log(res)
             return res.data;
         } catch(error){
             //console.log(error.response.data.message)

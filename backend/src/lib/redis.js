@@ -12,10 +12,10 @@ const redisOptions = {
   }
 };
 
-const testQueue = new Queue('postSignupQueue', redisOptions);
+const postSingupQueue = new Queue('postSignupQueue', redisOptions);
 
 // Access the internal Redis instance
-const client = testQueue.client;
+const client = postSingupQueue.client;
 
 // Listen for connection success
 client.on('connect', () => {
@@ -27,4 +27,4 @@ client.on('error', (err) => {
   console.error('❌ Redis connection error:', err);
 });
 
-export default testQueue;
+export default postSingupQueue;

@@ -11,7 +11,7 @@ config();
 export const getUsersForSidebar = async(req, res) => {
     try{
         const loggedInUserId = req.user._id;
-        const filteredUsers = await User.find({_id: {$ne: loggedInUserId }}).select("-password");
+        const filteredUsers = await User.find({_id: {$ne: loggedInUserId }}).select("-password"); //$ne not equal to
 
         return res.status(200).json(filteredUsers);
     } catch(error){
@@ -87,6 +87,16 @@ export const translateMessage = async(req, res) => {
         return res.status(200).json(translatedText);    
     } catch(error){
         console.log("Error in Translation controller", error.message);
-        return res.status(500).json({message:error.message})
+        return res.status(500).json({message:"Gemini failure"})
     }
 };
+
+export const getWelcomeUser = async(req, res) => {
+    try {
+        const welcomeUser = await User.find({_id: process.env.WELCOME_USER}).select("-password");
+        return res.status(200).json(welcomeUser);
+    } catch(error){
+        console.log("Error finding the welcome user:", error.message)
+        return res.status(500).json({message:"Interal Server Error"})
+    }
+}
