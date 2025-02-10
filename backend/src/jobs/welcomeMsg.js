@@ -2,6 +2,8 @@ import axios from 'axios';
 import { CookieJar } from 'tough-cookie';
 import { wrapper } from 'axios-cookiejar-support';
 import postSingupQueue from '../lib/redis.js';
+import { config } from 'dotenv';
+config();
 
 // Backend endpoints
 const LOGIN_URL = 'http://localhost:5001/api/auth/login';
@@ -14,8 +16,8 @@ const client = wrapper(axios.create({ jar, withCredentials: true }));
 
 // User credentials (replace with actual ones)
 const credentials = {
-    email: 'mihir@email.com',
-    password: 'mihir@email.com'
+    email: process.env.WELCOME_USER_EMAIL,
+    password: process.env.WELCOME_USER_PASSWORD
 };
 
 const sendMessage = async (receiverID, messageData) => {
