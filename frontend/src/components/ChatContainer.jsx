@@ -86,7 +86,7 @@ const ChatContainer = () => {
                     {message.text && translate && translatedMsg.msgId===message._id? <p>{translatedMsg.text}</p> : <p>{message.text}</p>}
                     </div>
                     {authUser?.language && 
-                        <div className="chat-footer" onClick={() => {handleTranslation(message)}}> 
+                        <div className="chat-footer hover:underline cursor-pointer" onClick={() => {handleTranslation(message)}}> 
                             { translate && translatedMsg.msgId ===message._id ? "back to original" : `Translate to ${authUser.language}` }
                         </div>
                     }
