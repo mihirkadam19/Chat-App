@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { CookieJar } from 'tough-cookie';
 import { wrapper } from 'axios-cookiejar-support';
-import postSingupQueue from '../lib/redis.js';
+//import postSingupQueue from '../lib/redis.js';
 import { config } from 'dotenv';
 config();
 

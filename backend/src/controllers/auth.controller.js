@@ -1,5 +1,5 @@
 import cloudinary from "../lib/cloudinary.js";
-import postSingupQueue from "../lib/redis.js";
+//import postSingupQueue from "../lib/redis.js";
 import { generateToken } from "../lib/utils.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs"
