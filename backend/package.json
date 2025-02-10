@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "backend": "nodemon ./src/index.js",
-    "start": "node ./src/index.js"
+    "start": "node ./src/index.js",
+    "redis": "node ./src/jobs/welcomeMsg.js"
   },
   "keywords": [],
   "author": "",
