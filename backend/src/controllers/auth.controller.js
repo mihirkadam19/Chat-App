@@ -36,7 +36,8 @@ export const signup = async (req,res) => {
             generateToken(newUser._id, res);
             await newUser.save();
             
-            postSingupQueue.add({ userId: newUser._id }, { attempts: 1 });
+            //Redis disabled
+            //postSingupQueue.add({ userId: newUser._id }, { attempts: 1 });
             return res.status(201).json({
                 _id:newUser._id,
                 fullName:newUser.fullName,

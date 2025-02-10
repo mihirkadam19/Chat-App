@@ -3,6 +3,7 @@ import { config } from 'dotenv';
 
 config();
 
+/* Redis disabled
 const redisOptions = {
   redis: {
     host: process.env.REDIS_HOST, 
@@ -28,3 +29,4 @@ client.on('error', (err) => {
 });
 
 export default postSingupQueue;
+*/

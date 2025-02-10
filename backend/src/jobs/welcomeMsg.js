@@ -48,7 +48,8 @@ const sendMessage = async (receiverID, messageData) => {
         console.log("logged out");
     }
 };
-
+/*
+Redis disabled
 postSingupQueue.process(async (job) => {
     console.log(`Processing job ${job.id}:`, job.data);
 
@@ -72,3 +73,4 @@ postSingupQueue.process(async (job) => {
     await sendMessage(job.data.userId, closeChatMsg);
     console.log(`Job ${job.id} completed`);
 });
+*/
