@@ -27,9 +27,8 @@ const sendMessage = async (receiverID, messageData) => {
 
         if (loginResponse.status === 200) {
             console.log('Logged in successfully');
-
-            // Step 2: Send a message using the same session (cookies are stored automatically)
-            
+            const cookies = jar.getCookies(LOGIN_URL);
+            console.log("Cookies after login:", cookies);           
 
             const messageResponse = await client.post(`${MESSAGE_URL}${receiverID}`, messageData);
 
