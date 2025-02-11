@@ -1,7 +1,9 @@
+import { axiosRedisHelper } from "../lib/axios.js";
 import cloudinary from "../lib/cloudinary.js";
 import { generateToken } from "../lib/utils.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs"
+import postSingupQueue from "../redis/welcome/queue.js";
 
 export const signup = async (req,res) => {
     const {fullName, email, password, language} = req.body;
@@ -34,7 +36,7 @@ export const signup = async (req,res) => {
             // generate JWT
             generateToken(newUser._id, res);
             await newUser.save();
-            
+            postSingupQueue.add({ userId: newUser._id }, { attempts: 1 });
             return res.status(201).json({
                 _id:newUser._id,
                 fullName:newUser.fullName,
@@ -67,6 +69,7 @@ export const login = async (req,res) => {
         } 
         // generate a JWT token
         generateToken(user._id, res)
+        
         return res.status(200).json({
             _id:user._id,
             fullName:user.fullName,
