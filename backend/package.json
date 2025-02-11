@@ -5,7 +5,7 @@
   "scripts": {
     "backend": "nodemon ./src/index.js",
     "start": "node ./src/index.js",
-    "redis": "node ./src/jobs/welcomeMsg.js"
+    "redis": "node ./src/redis/welcome/process.js"
   },
   "keywords": [],
   "author": "",
