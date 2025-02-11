@@ -1,5 +1,4 @@
 import cloudinary from "../lib/cloudinary.js";
-//import postSingupQueue from "../lib/redis.js";
 import { generateToken } from "../lib/utils.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs"
@@ -36,8 +35,6 @@ export const signup = async (req,res) => {
             generateToken(newUser._id, res);
             await newUser.save();
             
-            //Redis disabled
-            //postSingupQueue.add({ userId: newUser._id }, { attempts: 1 });
             return res.status(201).json({
                 _id:newUser._id,
                 fullName:newUser.fullName,
