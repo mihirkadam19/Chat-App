@@ -42,7 +42,7 @@ const SignUpPage = () => {
     _id: "67a94069aeefabfb6a3ef296",
     email: "mihirkadam@email.com",
     fullName: "Mihir Kadam",
-    profilePic: "http://res.cloudinary.com/dsfzijfob/image/upload/v1739288086/cgbevxn8vtddxmdw9ov9.jpg",
+    profilePic: "http://res.cloudinary.com/dsfzijfob/image/upload/v1739149150/yuti42ytpainchmw48jh.jpg",
   } 
   
   const handleSubmit = (e) => {
