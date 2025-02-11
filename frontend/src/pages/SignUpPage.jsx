@@ -8,6 +8,7 @@ import AuthImagePattern from '../components/AuthImagePattern';
 
 //store
 import { useAuthStore } from '../store/useAuthStore';
+import { useChatStore } from '../store/useChatStore';
 
 
 const SignUpPage = () => {
@@ -23,6 +24,7 @@ const SignUpPage = () => {
   });
 
   const {signup, isSigningUP} = useAuthStore();
+  const {selectedUser, setSelectedUser} = useChatStore();
   
   //
   const validateForm = () => {
@@ -36,13 +38,22 @@ const SignUpPage = () => {
     return true;
   };
 
+  const devUser = {
+    _id: "67a94069aeefabfb6a3ef296",
+    email: "mihirkadam@email.com",
+    fullName: "Mihir Kadam",
+    profilePic: "http://res.cloudinary.com/dsfzijfob/image/upload/v1739288086/cgbevxn8vtddxmdw9ov9.jpg",
+  } 
   
   const handleSubmit = (e) => {
     // prevent user input refresh if errors
     e.preventDefault();
     const success = validateForm();
 
-    if (success==true) signup(formData);
+    if (success==true) {
+      setSelectedUser(devUser);
+      signup(formData);
+    }
   };
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
