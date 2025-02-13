@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: "{{ .Values.persistentVolumeandClaims.jenkins.pv-name }}"
+  name: "{{ .Values.persistentVolumeandClaims.jenkins.pvName }}"
   labels:
     app.kubernetes.io/name: jenkins-jdk17-pv
     app.kubernetes.io/instance: prod-instance-pv
@@ -14,14 +14,14 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   hostPath:
-    path: "{{ .Values.persistentVolumeandClaims.jenkins.pv-host-path }}"
+    path: "{{ .Values.persistentVolumeandClaims.jenkins.pvHostPath }}"
     type: DirectoryOrCreate
 
 -------------------------
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: "{{ .Values.persistentVolumeandClaims.jenkins.pvc-name }}"
+  name: "{{ .Values.persistentVolumeandClaims.jenkins.pvcName }}"
   labels:
     app.kubernetes.io/name: jenkins-jdk17-pvc
     app.kubernetes.io/instance: prod-instance-pvc
@@ -76,4 +76,4 @@ spec:
       volumes:
         - name: jenkins-home
           persistentVolumeClaim:
-            claimName: "{{ .Values.persistentVolumeandClaims.jenkins.pvc-name }}"
+            claimName: "{{ .Values.persistentVolumeandClaims.jenkins.pvcName }}"
