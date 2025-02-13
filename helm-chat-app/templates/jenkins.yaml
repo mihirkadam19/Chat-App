@@ -1,7 +1,9 @@
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: "{{ .Values.persistentVolumeandClaims.jenkins.pvName }}"
+  name: {{ .Values.persistentVolumeandClaims.jenkins.pvName }}
+  namespace: jenkins
   labels:
     app.kubernetes.io/name: jenkins-jdk17-pv
     app.kubernetes.io/instance: prod-instance-pv
@@ -14,14 +16,16 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   hostPath:
-    path: "{{ .Values.persistentVolumeandClaims.jenkins.pvHostPath }}"
+    path: {{ .Values.persistentVolumeandClaims.jenkins.pvHostPath }}
     type: DirectoryOrCreate
 
--------------------------
+---
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: "{{ .Values.persistentVolumeandClaims.jenkins.pvcName }}"
+  name: {{ .Values.persistentVolumeandClaims.jenkins.pvcName }}
+  namespace: jenkins
   labels:
     app.kubernetes.io/name: jenkins-jdk17-pvc
     app.kubernetes.io/instance: prod-instance-pvc
@@ -34,7 +38,7 @@ spec:
     requests:
       storage: 10Gi
 
---------------------------------
+---
 
 apiVersion: apps/v1
 kind: Deployment
@@ -60,15 +64,14 @@ spec:
         app.kubernetes.io/instance: prod-instance-sv
         app.kubernetes.io/component: ci-cd
         app.kubernetes.io/part-of: convo-ai
-        
     spec:
       containers:
         - name: jenkins-jdk17-container
-          image: "{{ .Values.images.jenkins.image }}:{{ .Values.images.jenkins.tag }}"
+          image: {{ .Values.images.jenkins.image }}:{{ .Values.images.jenkins.tag }}
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
-              containerPort: "{{ .Values.containerPorts.jenkins }}"
+              containerPort: {{ .Values.containerPorts.jenkins }}
               protocol: TCP
           volumeMounts:
             - name: jenkins-home
@@ -76,4 +79,21 @@ spec:
       volumes:
         - name: jenkins-home
           persistentVolumeClaim:
-            claimName: "{{ .Values.persistentVolumeandClaims.jenkins.pvcName }}"
+            claimName: {{ .Values.persistentVolumeandClaims.jenkins.pvcName }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-service
+  namespace: jenkins
+  labels:
+    app.kubernetes.io/name: jenkins
+spec:
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: jenkins-jdk17-sv
+    app.kubernetes.io/instance: prod-instance-sv
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30080

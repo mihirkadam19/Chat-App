@@ -1,18 +1,18 @@
 # Namespaces for different application
 namespaces:
-  - jenkins
+  - "jenkins"
 
 images:
   jenkins:
-    image: jenkins/jenkins
-    tag: jdk17
+    image: "jenkins/jenkins"
+    tag: "jdk17"
 
 containerPorts:
   jenkins: 8080
 
 
 persistentVolumeandClaims:
-  jenkins: 
-    pvc-name: jenkins-home-pvc
-    pv-name: jenkins-home-pv
-    pv-host-path: /var/k8s/chat-app
+  jenkins:
+    pvcName: "jenkins-home-pvc"
+    pvName: "jenkins-home-pv"
+    pvHostPath: "/var/k8s/chat-app"
