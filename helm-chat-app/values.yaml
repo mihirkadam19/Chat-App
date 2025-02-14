@@ -8,7 +8,9 @@ images:
     tag: "jdk17"
 
 containerPorts:
-  jenkins: 8080
+  jenkins:
+    http: 8080
+    jnlp: 50000
 
 
 persistentVolumeandClaims:

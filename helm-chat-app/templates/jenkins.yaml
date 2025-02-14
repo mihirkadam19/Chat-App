@@ -71,8 +71,10 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
-              containerPort: {{ .Values.containerPorts.jenkins }}
+              containerPort: {{ .Values.containerPorts.jenkins.http }}
               protocol: TCP
+            - name: jnlp
+              containerPort: {{ .Values.containerPorts.jenkins.jnlp}}
           volumeMounts:
             - name: jenkins-home
               mountPath: /var/jenkins_home
@@ -94,6 +96,39 @@ spec:
     app.kubernetes.io/name: jenkins-jdk17-sv
     app.kubernetes.io/instance: prod-instance-sv
   ports:
-    - port: 8080
+    - name: ui
+      port: 8080
       targetPort: 8080
       nodePort: 30080
+    - name: agent
+      port: 50000
+      targetPort: 50000
+      nodePort: 32000
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: jenkins
+  name: jenkins-pod-manager
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch", "create", "delete"]
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: jenkins-pod-manager-binding
+  namespace: jenkins
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: jenkins
+roleRef:
+  kind: Role
+  name: jenkins-pod-manager
+  apiGroup: rbac.authorization.k8s.io
+
